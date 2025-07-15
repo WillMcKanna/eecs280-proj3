@@ -32,11 +32,25 @@ Movie::Movie()
 }
 
 Movie::Movie(const Movie& other) : year(other.year), date_published(other.date_published), num_genres(other.num_genres),
-                            genre(other.genre), duration_min(other.duration_min), country(other.country),
-                            language(other.language), directors(other.directors), writer(other.writer),
+                            duration_min(other.duration_min), country(other.country),
+                            language(other.language), writer(other.writer),
                             production_company(other.production_company), num_actors(other.num_actors),
-                            actors(other.actors), usa_gross_income(other.usa_gross_income),
-                            worldwide_gross_income(other.worldwide_gross_income){}
+                            usa_gross_income(other.usa_gross_income), worldwide_gross_income(other.worldwide_gross_income){
+    genre = new std::string[num_genres];
+    for (int i = 0; i < num_genres; ++i) {
+        genre[i] = other.genre[i];
+    }
+
+    directors = new std::string[num_directors];
+    for (int i = 0; i < num_directors; ++i) {
+        directors[i] = other.genre[i];
+    }
+
+    actors = new std::string[num_actors];
+    for (int i = 0; i < num_actors; ++i) {
+        actors[i] = other.actors[i];
+    }
+}
 
 bool operator==(const Movie& movie, const std::string& title)
 {
