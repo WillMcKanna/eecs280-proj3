@@ -31,6 +31,13 @@ Movie::Movie()
 	// nothing to do here
 }
 
+Movie::Movie(const Movie& other) : year(other.year), date_published(other.date_published), num_genres(other.num_genres),
+                            genre(other.genre), duration_min(other.duration_min), country(other.country),
+                            language(other.language), directors(other.directors), writer(other.writer),
+                            production_company(other.production_company), num_actors(other.num_actors),
+                            actors(other.actors), usa_gross_income(other.usa_gross_income),
+                            worldwide_gross_income(other.worldwide_gross_income){}
+
 bool operator==(const Movie& movie, const std::string& title)
 {
 	return movie.title == title;
@@ -247,3 +254,6 @@ std::ostream& operator<<(std::ostream& os, const Movie& m)
 	return os << m.one_liner();
 }
 
+Movie::~Movie() {
+
+}
