@@ -14,9 +14,9 @@ public:
 	Movie();
 
 	// the big 3: copy constructor, operator= and destructor
-//	Movie(const Movie&);			// for step 1
-//	Movie& operator=(const Movie&);		// for step 1
-//	~Movie();				// for step 1
+	Movie(const Movie&);			// for step 1
+	Movie& operator=(const Movie&);		// for step 1
+	~Movie();				// for step 1
 
 	// for easy .csv input
 	friend std::istream& operator>>(std::istream&, Movie&);

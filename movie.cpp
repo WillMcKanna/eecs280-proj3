@@ -35,7 +35,8 @@ Movie::Movie(const Movie& other) : year(other.year), date_published(other.date_p
                             duration_min(other.duration_min), country(other.country),
                             language(other.language), writer(other.writer),
                             production_company(other.production_company), num_actors(other.num_actors),
-                            usa_gross_income(other.usa_gross_income), worldwide_gross_income(other.worldwide_gross_income){
+                            usa_gross_income(other.usa_gross_income), worldwide_gross_income(other.worldwide_gross_income)
+{
     genre = new std::string[num_genres];
     for (int i = 0; i < num_genres; ++i) {
         genre[i] = other.genre[i];
@@ -52,6 +53,46 @@ Movie::Movie(const Movie& other) : year(other.year), date_published(other.date_p
     }
 }
 
+
+Movie & Movie::operator=(const Movie& other) 
+{
+    std::string* tempGenre = new std::string[num_genres];
+    for (int i = 0; i < num_genres; ++i) {
+        tempGenre[i] = other.genre[i];
+    }
+    delete[] this->genre;
+    genre = nullptr;
+    genre = tempGenre;
+
+
+    std::string* tempActors = new std::string[num_actors];
+    for (int i = 0; i < num_actors; ++i) {
+        tempActors[i] = other.actors[i];
+    }
+    delete[] this->actors;
+    actors = nullptr;
+    actors = tempActors;
+
+
+    std::string* tempDirectors = new std::string[num_directors];
+    for (int i = 0; i < num_directors; ++i) {
+        tempDirectors[i] = other.directors[i];
+    }
+    delete this->directors;
+    directors = nullptr;
+    directors = tempDirectors;
+    
+
+    year = other.year;
+    date_published = other.date_published;
+    duration_min = other.duration_min;
+    country = other.country;
+    language = other.language;
+    writer = other.writer;
+    production_company = other.production_company;
+    usa_gross_income = other.usa_gross_income;
+}
+
 bool operator==(const Movie& movie, const std::string& title)
 {
 	return movie.title == title;
@@ -59,7 +100,7 @@ bool operator==(const Movie& movie, const std::string& title)
 
 bool operator!=(const Movie& movie, const std::string& title)
 {
-	return ! (movie == title);
+	return !(movie.title == title);
 }
 
 bool operator==(const Movie& movie_1, const Movie& movie_2)
@@ -268,6 +309,9 @@ std::ostream& operator<<(std::ostream& os, const Movie& m)
 	return os << m.one_liner();
 }
 
-Movie::~Movie() {
-
+Movie::~Movie() 
+{
+    delete[] genre;
+    delete[] actors;
+    delete[] directors;
 }
