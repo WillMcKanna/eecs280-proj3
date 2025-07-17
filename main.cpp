@@ -83,10 +83,23 @@ int main(int argc, char** argv)
 	
 	//instantiate your inventory 
 	Inventory* inventory;		// if not using templates
-	//Inventory<Movie>* inventory;	// if using templates
+	
+	SinglyLinkedList singleLinkedList;
+
+	for (size_t i = 0; i < finicky_database.size(); i++)
+	{
+		Movie tempMovie;
+		finicky_database.read(tempMovie, i);
+
+		singleLinkedList.insert(tempMovie);
+	}
+	
+	
+	inventory = &singleLinkedList;
+	
 
 // *****************************************************************************************************
-// 	// step 2: instantiate an inventory as a linked list
+	// step 2: instantiate an inventory as a linked list
 	if( operations[0] == "type" && operations[1] == "linked_list" )
 	{
 		cerr << "Instantiating the inventory as a linked list!" << endl;
@@ -110,8 +123,10 @@ int main(int argc, char** argv)
 // *****************************************************************************************************
 	//step 3.5: populate your inventory from the finicky database
 
-	//show the current state of the inventory
-	//cerr << *inventory << endl;
+	// show the current state of the inventory
+	
+	cerr << *inventory << endl;
+	
 // *****************************************************************************************************
 	// step 4: implement a user list as a doubly linked list
 	// process each command in the test case according to the inventory interface

@@ -18,7 +18,7 @@ bool SinglyLinkedList::empty() const
 }
 
 // adds new data to the front of the list
-void SinglyLinkedList::push_front(Movie& datum)
+void SinglyLinkedList::insert(const Movie& datum)
 {
     // Create a new node
     Node* tempNode = new Node();
@@ -53,23 +53,23 @@ void SinglyLinkedList::pop_front()
 }
 
 // check if the list contains a particular item
-bool SinglyLinkedList::contains(const Movie& datum) const
+const Movie* SinglyLinkedList::contains(const std::string& datum)
 {
     // Creates a temporary variable 
     Node* tempNode = this->head;
 
     if (empty()) {
-        return false;
+        return nullptr;
     }
 
     while (tempNode != nullptr) {
-        if (tempNode->datum == datum) {
-            return true;
+        if (tempNode->datum.get_title() == datum) {
+            return &(tempNode->datum);
         }
         tempNode = tempNode->next;
     }
 
-    return false;
+    return nullptr;
 }
 
 // pushes all elements from another list onto this one
@@ -80,7 +80,7 @@ void SinglyLinkedList::push_all(const SinglyLinkedList& other)
 
     // While the node isnt null, pushes node to the front
     while (tempNode != nullptr) {
-        push_front(tempNode->datum);
+        insert(tempNode->datum);
         tempNode = tempNode->next;
     }
 
@@ -96,6 +96,18 @@ void SinglyLinkedList::pop_all()
     }
 
     return;
+}
+
+size_t SinglyLinkedList::size() const {
+    int count = 0;
+    Node* tempNode = this->head;
+
+    while (tempNode != nullptr) {
+        ++count;
+        tempNode = tempNode->next;
+    }
+
+    return (size_t) count;
 }
 
 // prints the list to a stream

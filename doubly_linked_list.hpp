@@ -5,14 +5,19 @@ class DoublyLinkedList
 {
     private:
     // recursive data structure to hold each chunk of the list
-	struct Node {
+	struct Node 
+    {
 		Movie datum;	// holds a piece of data
-		Node* next;	// holds a pointer to the next chunk
-        Node* prev; // holds pointer to the last node
+		Node* next;	    // holds a pointer to the next chunk
+        Node* prev;     // holds pointer to the last node
+
+        Node(const Movie& d = Movie()) : datum(d) {}; 
 	};
 
-	Node* head;		// first node of the list
-    Node* tail;     //last node of the list
+	Node* dummy_head;		// first node of the list, make sure to skip
+    Node* dummy_tail;     //last node of the list
+
+    int sizeOfList;
 
 
     public:
@@ -28,7 +33,7 @@ class DoublyLinkedList
     ~DoublyLinkedList();
 
     // insert movie at end, push_back
-    void insert(const Movie&);
+    void insert(const Movie& newMovie);
 
     // find first instance of movie return pointer to it, if doesn't exist return null pointer
     const Movie* contains(const std::string& title);
@@ -44,6 +49,8 @@ class DoublyLinkedList
 
     // prints out list
     void print(std::ostream&) const;
+
+    bool empty() const;
 
 
 

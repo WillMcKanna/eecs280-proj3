@@ -25,7 +25,7 @@ public:
 	bool empty() const;
 
 	// adds new data to the front of the list
-	void push_front(Movie&);
+	virtual void insert(const Movie&) override;
 
 	// gets a reference to the *data* value of the front node
 	Movie& front();
@@ -34,7 +34,7 @@ public:
 	void pop_front();
 	
 	// check if the list contains a particular item
-	bool contains(const Movie&) const;
+	virtual const Movie* contains(const std::string&) override;
 
 	// pushes all elements from another list onto this one
 	void push_all(const SinglyLinkedList&);
@@ -42,8 +42,11 @@ public:
 	// removes all of the data from the list
 	void pop_all();
 
+	// returns the size of the linked list
+	virtual size_t size() const override;
+
 	// prints the list to a stream
-	void print(std::ostream&) const;
+	virtual void print(std::ostream&) const override;
 
 	// prints the list to a stream in a convenient way
 	// NOTE: non-member function
