@@ -31,7 +31,7 @@ Movie::Movie()
 	// nothing to do here
 }
 
-Movie::Movie(const Movie& other) : year(other.year), date_published(other.date_published), num_genres(other.num_genres),
+Movie::Movie(const Movie& other) : title(other.title), year(other.year), date_published(other.date_published), num_genres(other.num_genres),
                             duration_min(other.duration_min), country(other.country),
                             language(other.language), writer(other.writer),
                             production_company(other.production_company), num_actors(other.num_actors),
@@ -82,7 +82,7 @@ Movie & Movie::operator=(const Movie& other)
     directors = nullptr;
     directors = tempDirectors;
     
-
+    title = other.title;
     year = other.year;
     date_published = other.date_published;
     duration_min = other.duration_min;
