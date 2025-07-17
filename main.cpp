@@ -2,6 +2,8 @@
 #include "inventory.hpp"
 #include "finicky_database.hpp"
 
+#include "singly_linked_list.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -65,32 +67,32 @@ int main(int argc, char** argv)
 	// (leave the copy constructor and operator= for the Movie class)
 // *****************************************************************************************************
 	// step 1.5: get a bunch of info from stdin, describing what to do next in the test case
-	// string operation;
-	// string name;
-	// std::vector<std::string> operations;
-	// start = std::chrono::high_resolution_clock::now();
-	// while( std::getline(cin, operation, '\t' ) && std::getline(cin, name, '\n' ) )
-	// {
-	// 	operations.push_back( operation );
-	// 	operations.push_back( name );
-	// }
-	// end = std::chrono::high_resolution_clock::now();
-	// diff  = std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count();
-	// cerr << "Received " << (operations.size()-2) / 2 << " operations in " << diff << " s" << endl;
-	// bool linked_list = false;
+	string operation;
+	string name;
+	std::vector<std::string> operations;
+	start = std::chrono::high_resolution_clock::now();
+	while( std::getline(cin, operation, '\t' ) && std::getline(cin, name, '\n' ) )
+	{
+		operations.push_back( operation );
+		operations.push_back( name );
+	}
+	end = std::chrono::high_resolution_clock::now();
+	diff  = std::chrono::duration_cast<std::chrono::duration<double>>(end - start).count();
+	cerr << "Received " << (operations.size()-2) / 2 << " operations in " << diff << " s" << endl;
+	bool linked_list = false;
 	
-	// instantiate your inventory 
-	//Inventory* inventory;		// if not using templates
+	//instantiate your inventory 
+	Inventory* inventory;		// if not using templates
 	//Inventory<Movie>* inventory;	// if using templates
 
 // *****************************************************************************************************
 // 	// step 2: instantiate an inventory as a linked list
-// 	if( operations[0] == "type" && operations[1] == "linked_list" )
-// 	{
-// 		cerr << "Instantiating the inventory as a linked list!" << endl;
+	if( operations[0] == "type" && operations[1] == "linked_list" )
+	{
+		cerr << "Instantiating the inventory as a linked list!" << endl;
 
-// 		linked_list = true;
-// 	}
+		linked_list = true;
+	}
 // // *****************************************************************************************************
 // 	// step 3: instantiate an inventory as a binary tree
 // 	else if( operations[0] == "type" && operations[1] == "binary_tree" )
@@ -106,9 +108,9 @@ int main(int argc, char** argv)
 // 	}
 
 // *****************************************************************************************************
-	// step 3.5: populate your inventory from the finicky database
+	//step 3.5: populate your inventory from the finicky database
 
-	// show the current state of the inventory
+	//show the current state of the inventory
 	//cerr << *inventory << endl;
 // *****************************************************************************************************
 	// step 4: implement a user list as a doubly linked list

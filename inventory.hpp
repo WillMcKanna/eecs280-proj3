@@ -3,7 +3,7 @@
 
 #include <string>
 
-#define TEMPLATE true // choose whether you want to use templates or not
+#define TEMPLATE false // choose whether you want to use templates or not
 
 #if TEMPLATE // use this code if you want to use templates
 template<typename T>

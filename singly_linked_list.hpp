@@ -2,12 +2,14 @@
 #define SINGLY_LINKED_LIST_HPP
 
 #include <iostream>
+#include "movie.hpp"
+#include "inventory.hpp"
 
-class SinglyLinkedList {
+class SinglyLinkedList : public Inventory {
 private:
 	// recursive data structure to hold each chunk of the list
 	struct Node {
-		int datum;	// holds a piece of data
+		Movie datum;	// holds a piece of data
 		Node* next;	// holds a pointer to the next chunk
 	};
 
@@ -23,16 +25,16 @@ public:
 	bool empty() const;
 
 	// adds new data to the front of the list
-	void push_front(int);
+	void push_front(Movie&);
 
 	// gets a reference to the *data* value of the front node
-	int& front();
+	Movie& front();
 	
 	// removes and deallocates the front node of the list
 	void pop_front();
 	
 	// check if the list contains a particular item
-	bool contains(const int) const;
+	bool contains(const Movie&) const;
 
 	// pushes all elements from another list onto this one
 	void push_all(const SinglyLinkedList&);
@@ -81,7 +83,7 @@ public:
 		Iterator(Node*);
 
 		// adapation of dereference operator
-		int& operator* () const;
+		Movie& operator* () const;
 
 		// prefix iterator increment operator
 		Iterator& operator++ ();

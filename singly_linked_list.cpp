@@ -18,7 +18,7 @@ bool SinglyLinkedList::empty() const
 }
 
 // adds new data to the front of the list
-void SinglyLinkedList::push_front(int datum)
+void SinglyLinkedList::push_front(Movie& datum)
 {
     // Create a new node
     Node* tempNode = new Node();
@@ -31,7 +31,7 @@ void SinglyLinkedList::push_front(int datum)
 }
 
 // gets a reference to the *data* value of the front node
-int& SinglyLinkedList::front()
+Movie& SinglyLinkedList::front()
 {
     return this->head->datum;
 }
@@ -53,7 +53,7 @@ void SinglyLinkedList::pop_front()
 }
 
 // check if the list contains a particular item
-bool SinglyLinkedList::contains(const int datum) const
+bool SinglyLinkedList::contains(const Movie& datum) const
 {
     // Creates a temporary variable 
     Node* tempNode = this->head;
@@ -124,7 +124,7 @@ bool SinglyLinkedList::operator== (const SinglyLinkedList& other) const
 {
     Node* otherNode = other.head;
     for (Node* node = head; node != nullptr; node = node->next) {
-        if (node->datum != otherNode->datum) {
+        if (node->datum != otherNode->datum.get_title()) {                              // shouldn't otherNode be set to otherNode->next?3
             return false;
         }
 
@@ -132,6 +132,7 @@ bool SinglyLinkedList::operator== (const SinglyLinkedList& other) const
         if (otherNode == nullptr) {
             return false;
         }
+        otherNode = otherNode->next;
     }
 
     return true;
@@ -189,7 +190,7 @@ SinglyLinkedList::Iterator SinglyLinkedList::end()
 }
 
 // get the data value of a node via an iterator
-int& SinglyLinkedList::Iterator::operator*() const
+Movie& SinglyLinkedList::Iterator::operator*() const
 {
     return node->datum;
 }
