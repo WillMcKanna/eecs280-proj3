@@ -1,11 +1,11 @@
 #include "doubly_linked_list.hpp"
 
-DoublyLinkedList::DoublyLinkedList()
+DoublyLinkedList::DoublyLinkedList() : dummy_head(new Node(Movie())), dummy_tail(new Node(Movie()))
 {
-    dummy_head = new Node(Movie());                         // dummy_head is always at beginning of list, skip over when iterating
-    dummy_tail = new Node(Movie());                         // dummy_tail is always at end of list, stop iteration once hit
+    // dummy_head is always at beginning of list, skip over when iterating
+    // dummy_tail is always at end of list, stop iteration once hit
+    // make sure they point at each other whem empty, and when constructing
 
-    
     dummy_head->next = dummy_tail;
     dummy_head->prev = nullptr;
 
@@ -15,6 +15,32 @@ DoublyLinkedList::DoublyLinkedList()
     sizeOfList = 0;
     
 }
+
+DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& other) : dummy_head(new Node(Movie())), dummy_tail(new Node(Movie()))
+{
+    sizeOfList = 0;
+
+    // should point at each other and also have nullptr in front of dummy_head and after dummy_tail
+    dummy_head->next = dummy_tail;
+    dummy_head->prev = nullptr;
+
+    dummy_tail->prev = dummy_head;
+    dummy_tail->next = nullptr;
+
+
+    Node* currentNode = other.dummy_head->next;
+
+    // inserts new node before dummy_tail and after last current node, fixes pointer in functions
+    while (currentNode != other.dummy_tail)
+    {
+        this->insert(currentNode->datum);
+        currentNode = currentNode->next;
+    }
+    
+}
+
+
+
 
 DoublyLinkedList::~DoublyLinkedList()
 {
@@ -33,7 +59,8 @@ DoublyLinkedList::~DoublyLinkedList()
 }
 
  
- void DoublyLinkedList::insert(const Movie& newMovie)
+ // insert new node before dummy_tail and after last node, perserve order
+ void DoublyLinkedList::insert(const Movie& newMovie) 
  { 
 
     Node* newNodeMovie = new Node(newMovie);
@@ -55,7 +82,7 @@ DoublyLinkedList::~DoublyLinkedList()
 
     Node* curr = dummy_head->next;
 
-    while (curr)
+    while (curr != dummy_tail)
     {
         if(curr->datum.get_title() == title)
         {
@@ -141,6 +168,8 @@ void DoublyLinkedList::swapMovie(const Movie& movie1, const Movie& movie2)
       currNode = currNode->next; 
     }
 
+    // might need different logic if they are adjacent
+
     Node* movie1NodePrev = movie1Node->prev;
     Node* movie1NodeNext = movie1Node->next;
 
@@ -155,7 +184,7 @@ void DoublyLinkedList::swapMovie(const Movie& movie1, const Movie& movie2)
     movie2NodePrev->next = movie1Node;
     
 
-    
+
     movie2Node->prev = movie1NodePrev;
     movie2Node->next = movie1NodeNext;
 
