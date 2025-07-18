@@ -3,6 +3,7 @@
 #include "finicky_database.hpp"
 
 #include "singly_linked_list.hpp"
+#include "doubly_linked_list.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -125,16 +126,71 @@ int main(int argc, char** argv)
 
 	// show the current state of the inventory
 	
-	cerr << *inventory << endl;
+	//cerr << *inventory << endl;
 	
 // *****************************************************************************************************
 	// step 4: implement a user list as a doubly linked list
+	DoublyLinkedList user_list;
+	
 	// process each command in the test case according to the inventory interface
+	
+	for (size_t i = 0; i < operations.size() - 1; i++)
+	{
+		
+		if (operations.at(i) == "insert")
+		{
+			std::string tempMovieStr = operations.at(i+1);
+			const Movie* tempMoviePtr = inventory->contains(tempMovieStr);
+			// can only insert into user listif movie title is in inventory, tempMoviePtr is null if not in inventory
+			if (tempMoviePtr)
+			{
+				user_list.insert(*tempMoviePtr);
+			}
+			else {
+				cerr << "Given movie is not in the inventory." << endl;
+			}
+		}
+		
+		if (operations.at(i) == "remove")
+		{
+			std::string tempMovieStr = operations.at(i+1);
+			const Movie* tempMoviePtr = inventory->contains(tempMovieStr);
+			
+			if (tempMoviePtr)  {
+				user_list.remove(*tempMoviePtr);
+			}
+			else
+			{
+				cerr << "Given movie is not in inventory." << endl;
+			}
+		}
+		
+		if (operations.at(i) == "swap") 
+		{
+			std::string tempMovieStr = operations.at(i+1);
+			int indexOfPipe = tempMovieStr.find("|");
 
+			std::string movie1Title = tempMovieStr.substr(0, indexOfPipe);
+			std::string movie2Title = tempMovieStr.substr(indexOfPipe + 1);
+
+			const Movie* tempMovie1Ptr = inventory->contains(movie1Title);
+			const Movie* tempMovie2Ptr = inventory->contains(movie2Title);
+
+			if (tempMovie1Ptr && tempMovie2Ptr) {
+				user_list.swap(*tempMovie1Ptr, *tempMovie2Ptr);
+			}
+			else {
+				cerr << "At least one of these movies is not in the inventory." << endl;
+			}
+		}
+		
+	}
 	// step 4.5: output the user list to stdout
-	//cerr << "Outputting user list." << endl;
-	//cout << user_list << endl;
+	cerr << "Outputting user list." << endl;
+	cout << user_list << endl;
 
+	std::ofstream ofs("outputTestFile.txt");
+	ofs << user_list << endl;
 	cerr << "At the end of main!" << endl;
 
 	return 0;

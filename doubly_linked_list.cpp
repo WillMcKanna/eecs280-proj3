@@ -1,11 +1,15 @@
 #include "doubly_linked_list.hpp"
 
-DoublyLinkedList::DoublyLinkedList() : dummy_head(new Node(Movie())), dummy_tail(new Node(Movie()))
+DoublyLinkedList::DoublyLinkedList()
 {
     // dummy_head is always at beginning of list, skip over when iterating
     // dummy_tail is always at end of list, stop iteration once hit
     // make sure they point at each other whem empty, and when constructing
 
+    dummy_head = new Node(Movie());
+    dummy_tail = new Node(Movie());
+
+    // next and prev are initalized as nullptr
     dummy_head->next = dummy_tail;
     dummy_head->prev = nullptr;
 
@@ -97,7 +101,7 @@ DoublyLinkedList::~DoublyLinkedList()
 
 
 // only call if movie exists in inventory
-void DoublyLinkedList::deleteMovie(const Movie& movieToRemove)
+void DoublyLinkedList::remove(const Movie& movieToRemove)
 {
     if (contains(movieToRemove.get_title()))                           // only look to remove a movie if it exists (not nullptr)
     {
@@ -126,18 +130,22 @@ void DoublyLinkedList::deleteMovie(const Movie& movieToRemove)
             curr = curr->next;
         }
     }
-
+    else
+    {
+        std::cerr << "Movie does not exist in user's list." << std::endl;
+    }
     return;
     
 }
 
 // only call if both movies are in inventory
-void DoublyLinkedList::swapMovie(const Movie& movie1, const Movie& movie2)
+void DoublyLinkedList::swap(const Movie& movie1, const Movie& movie2)
 {
 
     
     if (!contains(movie1.get_title()) || !contains(movie2.get_title()))                             // list must comtain both movie titles
     {
+        std::cerr << "A movie input does not exist." << std::endl;
         return;
     }
 
@@ -168,28 +176,89 @@ void DoublyLinkedList::swapMovie(const Movie& movie1, const Movie& movie2)
       currNode = currNode->next; 
     }
 
-    // might need different logic if they are adjacent
-
-    Node* movie1NodePrev = movie1Node->prev;
-    Node* movie1NodeNext = movie1Node->next;
-
-    Node* movie2NodePrev = movie2Node->prev;
-    Node* movie2NodeNext = movie2Node->next;
-
-
-    movie1NodeNext->prev = movie2Node;
-    movie1NodePrev->next = movie2Node;
-    
-    movie2NodeNext->prev = movie1Node;
-    movie2NodePrev->next = movie1Node;
     
 
+    // if movie1 comes right before movie2
+    if (movie1Node->next == movie2Node)
+    {
+        Node* tempPrevPtr = movie1Node->prev;
+        Node* tempNextPtr = movie2Node->next;
 
-    movie2Node->prev = movie1NodePrev;
-    movie2Node->next = movie1NodeNext;
+        movie1Node->next = tempNextPtr;
+        movie1Node->prev = movie2Node;
+        
+        movie2Node->next = movie1Node;
+        movie2Node->prev = tempPrevPtr;
 
-    movie1Node->next = movie2NodeNext;
-    movie1Node->prev = movie2NodePrev;
+        tempPrevPtr->next = movie2Node;
+        tempNextPtr->prev = movie1Node;
+    }
+    // if movie1 comes right after movie2
+    else if (movie1Node->prev == movie2Node)
+    {
+        Node* tempPrevPtr = movie2Node->prev;
+        Node* tempNextPtr = movie1Node->next;
+
+        movie2Node->next = tempNextPtr;
+        movie2Node->prev = movie1Node;
+
+        movie1Node->next = movie2Node;
+        movie1Node->prev = tempPrevPtr;
+
+        tempPrevPtr->next = movie1Node;
+        tempNextPtr->prev = movie2Node;
+    }
+    // not adjacent
+    else
+    {
+        Node* movie1NodePrev = movie1Node->prev;
+        Node* movie1NodeNext = movie1Node->next;
+
+        Node* movie2NodePrev = movie2Node->prev;
+        Node* movie2NodeNext = movie2Node->next;
+
+
+        movie1NodeNext->prev = movie2Node;
+        movie1NodePrev->next = movie2Node;
+        
+        movie2NodeNext->prev = movie1Node;
+        movie2NodePrev->next = movie1Node;
+
+
+
+        movie2Node->prev = movie1NodePrev;
+        movie2Node->next = movie1NodeNext;
+
+        movie1Node->next = movie2NodeNext;
+        movie1Node->prev = movie2NodePrev;
+
+    }
+
+}
+
+
+
+void DoublyLinkedList::print(std::ostream& output_stream) const
+{
+    
+    for (Node* node = dummy_head->next; node != dummy_tail; node = node->next) {
+        if (node->next != dummy_tail) 
+        {
+            output_stream << node->datum << std::endl;
+        }
+        else 
+        {
+            output_stream << node->datum;
+        }
+    }
+    
+}
+
+
+std::ostream& operator<< (std::ostream& output_stream, const DoublyLinkedList& list)
+{
+    list.print(output_stream);
+    return output_stream;
 }
 
 

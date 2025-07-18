@@ -13,13 +13,15 @@
 
 // constructor
 Movie::Movie()
-	: year(0),
+	: title(""),
+      year(0),
 	  date_published{},
 	  num_genres(0),
 	  genre(nullptr),
 	  duration_min(0),
 	  country(),
 	  language(),
+      num_directors(0),
 	  directors(nullptr),
 	  writer(),
 	  production_company(),
@@ -33,7 +35,7 @@ Movie::Movie()
 
 Movie::Movie(const Movie& other) : title(other.title), year(other.year), date_published(other.date_published), num_genres(other.num_genres),
                             duration_min(other.duration_min), country(other.country),
-                            language(other.language), writer(other.writer),
+                            language(other.language), num_directors(other.num_directors), writer(other.writer),
                             production_company(other.production_company), num_actors(other.num_actors),
                             usa_gross_income(other.usa_gross_income), worldwide_gross_income(other.worldwide_gross_income)
 {
@@ -44,7 +46,7 @@ Movie::Movie(const Movie& other) : title(other.title), year(other.year), date_pu
 
     directors = new std::string[other.num_directors];
     for (int i = 0; i < other.num_directors; ++i) {
-        directors[i] = other.genre[i];
+        directors[i] = other.directors[i];
     }
 
     actors = new std::string[other.num_actors];

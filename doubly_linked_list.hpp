@@ -1,5 +1,8 @@
-#include "inventory.hpp"
+#pragma once
+#include <iostream>
+
 #include "movie.hpp"
+
 
 class DoublyLinkedList
 {
@@ -11,7 +14,7 @@ class DoublyLinkedList
 		Node* next;	    // holds a pointer to the next chunk
         Node* prev;     // holds pointer to the last node
 
-        Node(const Movie& d = Movie()) : datum(d) {}; 
+        Node(const Movie& d = Movie()) : datum(d), next(nullptr), prev(nullptr) {}; 
 	};
 
 	Node* dummy_head;		// first node of the list, make sure to skip
@@ -39,16 +42,20 @@ class DoublyLinkedList
     const Movie* contains(const std::string& title);
 
     // find movie and remove from linked list
-    void deleteMovie(const Movie& movieToRemove);
+    void remove(const Movie& movieToRemove);
 
     // swap movies
-    void swapMovie(const Movie& movie1, const Movie& movie2);
+    void swap(const Movie& movie1, const Movie& movie2);
+
+    // prints the list to a stream
+    void print(std::ostream& output_stream) const;
+
+    // prints the stream when using <<
+    friend std::ostream& operator<< (std::ostream& output_stream, const DoublyLinkedList& list);
 
     // returrns size of list
     size_t size() const;
 
-    // prints out list
-    void print(std::ostream&) const;
 
     bool empty() const;
 
