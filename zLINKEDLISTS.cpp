@@ -438,6 +438,16 @@ class BinarySearchTree
             return containsHelper(root, value);
         }
 
+        void insert(const int& value) 
+        {
+            root = insertHelper(root, value);
+        }
+
+        void toStr()
+        {
+            print(std::cout, root);
+        }
+
     private:
         struct Node
         {
@@ -478,13 +488,53 @@ class BinarySearchTree
                 return containsHelper(r->left, val);
             }
             
-            else if (val > r->value)                   // if value is greater tha current node, value must be in right subtree if exists
+            else                                      // if value is greater tha current node, value must be in right subtree if exists
             {
                 return containsHelper(r->right, val);
             }
 
-            
+
         }
+
+
+        Node* insertHelper(Node* r, const int& val)
+        {
+            
+            if (r == nullptr)                                   // reached nullptr, create new node, assign to r, and return this node address
+            {
+                r = new Node(val);
+               
+            }
+            
+            else if (val <= r->value)
+            {
+                r->left = insertHelper(r->left, val);           // assign left pointer of current r to this node -> node created once hit nullptr and return address gets stored in left ptr
+            }
+            else
+            {
+                r->right = insertHelper(r->right, val);         // assign right pointer of current r to this node -> node created once hit nullptr and return address gets stored in right ptr
+            }
+
+            return r;                                           // return r to correctly assign each pointer when going back up
+        }
+
+
+        std::ostream& print(std::ostream& os, Node* r)
+        {
+            if (r == nullptr)
+            {
+                return os;
+            }
+            
+            
+
+            os << r->value << std::endl;
+            print(os, r->left);
+            print(os, r->right);
+            return os;
+        }
+
+
         
 };
 
@@ -492,7 +542,15 @@ class BinarySearchTree
 
 int main() 
 {
+    BinarySearchTree bst1;
+    bst1.insert(15);            // root
+    bst1.insert(12);            // root left child
+    bst1.insert(20);            // root right child
+    bst1.insert(10);            // 12 left child
+    bst1.insert(14);            // 12 right child, goes down left of 15, then right of 12
+    bst1.insert(11);            // down left of 15, left of 12, right of 10
 
+    bst1.toStr();
 
     return 0;
 }
