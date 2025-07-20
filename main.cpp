@@ -4,7 +4,7 @@
 
 #include "singly_linked_list.hpp"
 #include "doubly_linked_list.hpp"
-
+#include "binary_search_tree.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -86,18 +86,8 @@ int main(int argc, char** argv)
 	Inventory* inventory;		// if not using templates
 	
 	SinglyLinkedList singleLinkedList;
+	BinarySearchTree binarySearchTree;
 
-	for (size_t i = 0; i < finicky_database.size(); i++)
-	{
-		Movie tempMovie;
-		finicky_database.read(tempMovie, i);
-
-		singleLinkedList.insert(tempMovie);
-	}
-	
-	
-	inventory = &singleLinkedList;
-	
 
 // *****************************************************************************************************
 	// step 2: instantiate an inventory as a linked list
@@ -108,18 +98,39 @@ int main(int argc, char** argv)
 		linked_list = true;
 	}
 // // *****************************************************************************************************
-// 	// step 3: instantiate an inventory as a binary tree
-// 	else if( operations[0] == "type" && operations[1] == "binary_tree" )
-// 	{
-// 		cerr << "Instantiating the inventory as a binary tree!" << endl;
-// 	}
-// // *****************************************************************************************************
-// 	// something is wrong here so we end
-// 	else
-// 	{
-// 		cerr << "Malformed test file!" << endl;
-// 		return -1;
-// 	}
+	// step 3: instantiate an inventory as a binary tree
+ 	else if( operations[0] == "type" && operations[1] == "binary_tree" )
+ 	{
+ 		cerr << "Instantiating the inventory as a binary tree!" << endl;
+ 	}
+ // *****************************************************************************************************
+	// something is wrong here so we end
+	else
+	{
+		cerr << "Malformed test file!" << endl;
+		return -1;
+	}
+	
+	
+	if (linked_list)
+	{
+		inventory = &singleLinkedList;
+	}
+	else{
+		inventory = &binarySearchTree;
+	}
+
+
+	for (size_t i = 0; i < finicky_database.size(); i++)
+	{
+		Movie tempMovie;
+		finicky_database.read(tempMovie, i);
+
+		inventory->insert(tempMovie);
+	}
+	
+	
+	
 
 // *****************************************************************************************************
 	//step 3.5: populate your inventory from the finicky database
@@ -189,9 +200,20 @@ int main(int argc, char** argv)
 	cerr << "Outputting user list." << endl;
 	cout << user_list << endl;
 
-	std::ofstream ofs("outputTestFile.txt");
+	std::ofstream ofs;
+	if (linked_list)
+	{
+		ofs.open("outputTestFile.txt");
+	}
+	else {
+		ofs.open("outputTestFileBST.txt");
+	}
+
 	ofs << user_list << endl;
+	ofs.close();
 	cerr << "At the end of main!" << endl;
 
-	return 0;
+
+	
+	return 1;
 }

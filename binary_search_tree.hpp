@@ -17,12 +17,20 @@ class BinarySearchTree : public Inventory
         };
 
         TreeNode* root;
+        int numOfNodes;
+
+
+        /* Helper Functions */
+        TreeNode* insertHelper(TreeNode* node, const Movie& data);
+
+        TreeNode* containsHelper(TreeNode* node, const std::string& data);
+
+ 
 
     public:
 
         // default constructor
         BinarySearchTree();
-
 
 
         /* BIG THREE for Binary Search Tree */
@@ -35,9 +43,27 @@ class BinarySearchTree : public Inventory
 
         // destructor
         ~BinarySearchTree();
-
         
+        // helper functions for big 3
+        TreeNode* copyHelper(TreeNode* node);
+        void deleteNodes(TreeNode* node);
 
 
+        /* Pure Virtual functions inhereited from Inventory */
+
+        // insert movie into tree
+        void insert(const Movie&) override;
+
+        // iterate through tree to find movie
+        const Movie* contains(const std::string&) override;
+
+        // prints Movie info from tree nodes
+        void print(std::ostream&) const override;
+
+        //
+        std::ostream& printTree(std::ostream& os, TreeNode* node) const;
+
+        // returns the size of the binary search tree
+        size_t size() const override;
 
 };

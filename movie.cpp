@@ -179,7 +179,7 @@ bool operator<(const Movie& movie_1, const Movie& movie_2)
 
 bool operator>(const Movie& movie_1, const Movie& movie_2)
 {
-	return movie_2.title > movie_1.title;
+	return movie_1.title > movie_2.title;
 }
 
 // Static helper to read and sanitize a field
