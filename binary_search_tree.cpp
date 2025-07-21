@@ -159,16 +159,3 @@ std::ostream& BinarySearchTree::printTree(std::ostream& os, BinarySearchTree::Tr
     printTree(os, node->right);
     return os;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

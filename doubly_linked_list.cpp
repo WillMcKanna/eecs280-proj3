@@ -274,6 +274,56 @@ bool DoublyLinkedList::empty() const
     return (dummy_head->next == dummy_tail);
  }
 
+DoublyLinkedList::Iterator::Iterator() : node(nullptr) {}
+
+DoublyLinkedList::Iterator::Iterator(Node* _node) : node(_node) {}
+
+DoublyLinkedList::Iterator DoublyLinkedList::begin() {
+    return this->dummy_head;
+}
+
+DoublyLinkedList::Iterator DoublyLinkedList::end() {
+    return this->dummy_tail;
+}
+
+Movie& DoublyLinkedList::Iterator::operator*() const {
+    return node->datum;
+}
+
+DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator++() {
+    node = node->next;
+    return *this;
+}
+
+DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator--() {
+    node = node->prev;
+    return *this;
+}
+
+DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator--(int) {
+    node = node->prev;
+    return *this;
+}
+
+// check if one iterator is at the same position as another
+//   just compare them on the basis of the address of the nodes the represent
+bool DoublyLinkedList::Iterator::operator== (DoublyLinkedList::Iterator other) const
+{
+    if (this->node == other.node) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+// check if one iterator is NOT at the same position as another
+//   calls and negates operator==
+bool DoublyLinkedList::Iterator::operator!= (DoublyLinkedList::Iterator other) const
+{
+    return !(*this == other);
+}
+
 
 
 

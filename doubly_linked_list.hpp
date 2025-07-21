@@ -59,6 +59,43 @@ class DoublyLinkedList
 
     bool empty() const;
 
+    class Iterator {
+    private:
+        Node* node;
 
+    public:
+        // constructor
+        Iterator();
 
+        // constructor starting from a particular node
+        Iterator(Node*);
+
+        // adaptation of dereference operator
+        Movie& operator* () const;
+
+        // prefix iterator increment operator
+        Iterator& operator++ ();
+
+        // postfix iterator increment operator
+        Iterator& operator++ (int);
+
+        // prefix iterator decrement operator
+        Iterator& operator-- ();
+
+        // postfix iterator decrement operator
+        Iterator& operator-- (int);
+
+        // equality check between two iterators
+        bool operator== (Iterator) const;
+
+        // inequality check between two iterators
+        bool operator!= (Iterator) const;
+
+    };
+
+    // get an iterator starting at the beginning of the list
+    Iterator begin();
+
+    // get an iterator corresponding to the end of the list (nullptr)
+    Iterator end();
 };
