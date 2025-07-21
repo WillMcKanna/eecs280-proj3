@@ -84,7 +84,8 @@ int main(int argc, char** argv)
 	
 	//instantiate your inventory 
 	Inventory* inventory;		// if not using templates
-	
+
+
 	SinglyLinkedList singleLinkedList;
 	BinarySearchTree binarySearchTree;
 
@@ -110,14 +111,18 @@ int main(int argc, char** argv)
 		cerr << "Malformed test file!" << endl;
 		return -1;
 	}
+
 	
 	
+	
+	// always popoulate into singly lineid list, if bst, just go backwards
 	if (linked_list)
 	{
 		inventory = &singleLinkedList;
 	}
-	else{
-		inventory = &binarySearchTree;
+	else
+	{
+		inventory = &binarySearchTree;		
 	}
 
 
@@ -125,8 +130,11 @@ int main(int argc, char** argv)
 	{
 		Movie tempMovie;
 		finicky_database.read(tempMovie, i);
-
+	
+	
 		inventory->insert(tempMovie);
+		
+		
 	}
 	
 	
@@ -215,5 +223,5 @@ int main(int argc, char** argv)
 
 
 	
-	return 1;
+	return 0;
 }

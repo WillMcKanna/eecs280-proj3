@@ -112,8 +112,27 @@ BinarySearchTree::TreeNode* BinarySearchTree::insertHelper(BinarySearchTree::Tre
 
 const Movie* BinarySearchTree::contains(const std::string& data) 
 {
-    const Movie* tempMoviePtr = &(containsHelper(root, data)->datum);
-    return tempMoviePtr;
+
+
+    TreeNode* lastNodeWithName = nullptr;
+    TreeNode* node = root;
+    while (node != nullptr)
+    {
+        if (node->datum.get_title() == data)
+        {
+            lastNodeWithName = node;
+            node = node->right;
+        }
+        else if (node->datum.get_title() < data)
+        {
+            node = node->right;
+        }
+        else{
+            node = node->left;
+        }
+    }
+    
+    return &lastNodeWithName->datum;
 }
 
 BinarySearchTree::TreeNode* BinarySearchTree::containsHelper(BinarySearchTree::TreeNode* node, const std::string& data) 
@@ -160,7 +179,7 @@ BinarySearchTree::TreeNode* BinarySearchTree::containsHelper(BinarySearchTree::T
     // }
 
 
-
+    
     TreeNode* lastNodeWithName = nullptr;
 
     while (node != nullptr)
