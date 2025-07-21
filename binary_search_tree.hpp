@@ -2,6 +2,7 @@
 #include "movie.hpp"
 #include "inventory.hpp"
 #include <iostream>
+#include <vector>
 
 class BinarySearchTree : public Inventory
 {
@@ -16,16 +17,13 @@ class BinarySearchTree : public Inventory
             TreeNode(Movie data = Movie()) : datum(data), left(nullptr), right(nullptr) {} ;            // create default node, and node with movie passed in
         };
 
-        TreeNode* root;
+        static TreeNode* root;
         int numOfNodes;
 
 
         /* Helper Functions */
         TreeNode* insertHelper(TreeNode* node, const Movie& data);
 
-        TreeNode* containsHelper(TreeNode* node, const std::string& data);
-
- 
 
     public:
 
@@ -68,8 +66,27 @@ class BinarySearchTree : public Inventory
 
         class Iterator {
         public:
-            Iterator()
-            : root(nullptr), node(nullptr) {}
+            Iterator(BinarySearchTree::TreeNode* rootNode) 
+            {
+                index = 0;
+                BinarySearchTree::TreeNode* tempNode = rootNode;
+                populateTree(tempNode);
+            }
+
+            void populateTree(BinarySearchTree::TreeNode* node) 
+            {
+                // go all the way down and save smallest value
+                // than go all the way down until the node which the ->left = the smallest value
+                // at that point go right, then keep goin left
+
+                if (node == nullptr) {
+                    return;
+                }
+
+                populateTree(node->left);
+                movies.push_back(node);
+                populateTree(node->right);
+            } 
       
           // EFFECTS:  Returns the current element by reference.
           // WARNING:  Dereferencing an iterator returns an element from the tree
@@ -79,73 +96,45 @@ class BinarySearchTree : public Inventory
           //           to the existing value. Otherwise, the sorting invariant
           //           will no longer hold.
           Movie& operator*() const {
-            return node->datum;
-          }
-      
-          // EFFECTS:  Returns the current element by pointer.
-          // WARNING:  Dereferencing an iterator returns an element from the tree
-          //           by reference, which could be modified. It is the
-          //           responsibility of the user to ensure that any
-          //           modifications result in a new value that compares equal
-          //           to the existing value. Otherwise, the sorting invariant
-          //           will no longer hold.
-          // NOTE:     This allows the -> operator to be applied to an iterator
-          //           to access a member of the pointed-to element:
-          //             BinarySearchTree<std::pair<int, double>> tree;
-          //             auto it = tree.insert({ 3, 4.1 });
-          //             cout << it->first << endl; // prints 3
-          //             cout << it->second << endl; // prints 4.1
-          Movie* operator->() const {
-            return &node->datum;
+            return movies[index]->datum;
           }
 
           // Prefix ++
           Iterator &operator++() {
-            // ** EECS280 IMPLEMENTATION **
-            // if (node->right) {
-            //   // If has right child, next element is minimum of right subtree
-            //   node = min_element_impl(current_node->right);
-            // }
-            // else {
-            //   // Otherwise, look in the whole tree for the next biggest element
-            //   node = min_greater_than_impl(root, current_node->datum);
-            // }
-            
-            //return *this;
+            index++;
+            return *this;
           }
       
           // Postfix ++ (implemented in terms of prefix ++)
           Iterator operator++(int) {
-            Iterator result(*this);
-            ++(*this);
-            return result;
+            Iterator temp = *this;
+            this->index++;
+            return temp;
           }
       
           bool operator==(const Iterator &rhs) const {
-            return this->node == rhs.node;
+            return (this->index == rhs.index);
           }
       
           bool operator!=(const Iterator &rhs) const {
-            return this->node != rhs.node;
+            return !(this->index == rhs.index);
           }
+
 
         private:
           friend class BinarySearchTree;
-      
-          TreeNode *root;
-          TreeNode *node;
-      
-          Iterator(TreeNode *root_in, TreeNode* current_node_in)
-            : root(root_in), node(current_node_in) {}
+          std::vector<BinarySearchTree::TreeNode*> movies;
+          int index;
         };
 
-        // Not exactly the same as EECS, might want to check later
         Iterator begin() const {
-            return Iterator();
+            return Iterator(root);
         }
-        
         // EFFECTS: Returns an iterator to past-the-end.
         Iterator end() const {
-            return Iterator();
+            Iterator it(root);
+            it.index = it.movies.size();
+            
+            return it;
         }
 };

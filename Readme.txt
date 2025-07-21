@@ -23,11 +23,11 @@
 -----------------------------------------------------------------------------------------------
 Test Number:                 Single Linked List (SLL)                  Binary Search Tree (BST)
 ############                 ########################                  ########################
-    1                            0.0362367 seconds                        0.000077667 seconds  
-    6                            1.15081   seconds                        0.00157429  seconds 
-    7                            6.48915   seconds                        0.0129415   seconds
-    8                           61.381     seconds                        0.481246    seconds
-    9                          668.058     seconds                       40.5114      seconds
+     1                            0.0362367 seconds                        0.000077667 seconds  
+     6                            1.15081   seconds                        0.00157429  seconds 
+     7                            6.48915   seconds                        0.0129415   seconds
+     8                           61.381     seconds                        0.481246    seconds
+     9                          688.058     seconds                       40.5114      seconds
      
 
 ---------------------------------------------------------------------------
