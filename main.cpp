@@ -136,8 +136,6 @@ int main(int argc, char** argv)
 		
 	}
 	
-	
-	
 
 // *****************************************************************************************************
 	//step 3.5: populate your inventory from the finicky database
@@ -151,7 +149,9 @@ int main(int argc, char** argv)
 	DoublyLinkedList user_list;
 	
 	// process each command in the test case according to the inventory interface
-	
+	// ** initiate timer **
+	auto start_timer = std::chrono::high_resolution_clock::now();
+
 	for (size_t i = 0; i < operations.size() - 1; i++)
 	{
 		
@@ -203,9 +203,15 @@ int main(int argc, char** argv)
 		}
 		
 	}
+	// ** terminate timer **
+	auto end_timer = std::chrono::high_resolution_clock::now();
+	
+	// ** calculate diff
+	auto diff_timer  = std::chrono::duration_cast<std::chrono::duration<double>>(end_timer - start_timer).count();
+
 	// step 4.5: output the user list to stdout
 	cerr << "Outputting user list." << endl;
-	cout << user_list << endl;
+	cerr << user_list << "\n" << "Completed all operations in " << diff_timer << " seconds." << endl;
 
 	std::ofstream ofs;
 	if (linked_list)
@@ -216,7 +222,7 @@ int main(int argc, char** argv)
 		ofs.open("outputTestFileBST.txt");
 	}
 
-	ofs << user_list << endl;
+	ofs << user_list << "\n" << "Completed all operations in " << diff_timer << " seconds." << endl;
 	ofs.close();
 	cerr << "At the end of main!" << endl;
 

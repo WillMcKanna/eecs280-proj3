@@ -110,7 +110,8 @@ class BinarySearchTree : public Inventory
             //   // Otherwise, look in the whole tree for the next biggest element
             //   node = min_greater_than_impl(root, current_node->datum);
             // }
-            // return *this;
+            
+            //return *this;
           }
       
           // Postfix ++ (implemented in terms of prefix ++)

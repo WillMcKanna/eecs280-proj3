@@ -112,8 +112,6 @@ BinarySearchTree::TreeNode* BinarySearchTree::insertHelper(BinarySearchTree::Tre
 
 const Movie* BinarySearchTree::contains(const std::string& data) 
 {
-
-
     TreeNode* lastNodeWithName = nullptr;
     TreeNode* node = root;
     while (node != nullptr)
