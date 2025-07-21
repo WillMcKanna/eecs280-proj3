@@ -129,11 +129,10 @@ int main(int argc, char** argv)
 	for (size_t i = 0; i < finicky_database.size(); i++)
 	{
 		Movie tempMovie;
+		
 		finicky_database.read(tempMovie, i);
 	
-	
 		inventory->insert(tempMovie);
-		
 		
 	}
 	

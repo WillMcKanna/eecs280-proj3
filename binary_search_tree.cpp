@@ -135,71 +135,7 @@ const Movie* BinarySearchTree::contains(const std::string& data)
     return &lastNodeWithName->datum;
 }
 
-BinarySearchTree::TreeNode* BinarySearchTree::containsHelper(BinarySearchTree::TreeNode* node, const std::string& data) 
-{
 
-    // method 1
-    // if (node == nullptr)
-    // {
-    //     return nullptr;
-    // }
-
-    // if ((node->datum).get_title() == data)
-    // {
-    //     TreeNode* currNode = node;
-    //     node = node->left;
-    //     while (node)
-    //     {
-    //         if (node->datum.get_title() == data)
-    //         {
-    //             currNode = node;
-    //             node = node->left;
-    //         }
-    //         else if (node->datum.get_title() < data)
-    //         {
-    //             node = node->right;
-    //         }
-    //         else
-    //         {
-    //             node = node->left;
-    //         }
-
-    //     }
-    //     return currNode;
-        
-    // }
-    
-    // if ((node->datum).get_title() < data)
-    // {
-    //     return containsHelper(node->right, data);
-    // }
-    // else
-    // {
-    //     return containsHelper(node->left, data);
-    // }
-
-
-    
-    TreeNode* lastNodeWithName = nullptr;
-
-    while (node != nullptr)
-    {
-        if (node->datum.get_title() == data)
-        {
-            lastNodeWithName = node;
-            node = node->left;
-        }
-        else if (node->datum.get_title() < data)
-        {
-            node = node->right;
-        }
-        else{
-            node = node->left;
-        }
-    }
-    
-    return lastNodeWithName;
-}
 
 void BinarySearchTree::print(std::ostream& os) const 
 {
