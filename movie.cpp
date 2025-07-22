@@ -40,17 +40,17 @@ Movie::Movie(const Movie& other) : title(other.title), year(other.year), date_pu
                             usa_gross_income(other.usa_gross_income), worldwide_gross_income(other.worldwide_gross_income)
 {
     genre = new std::string[other.num_genres];
-    for (int i = 0; i < other.num_genres; ++i) {
+    for (size_t i = 0; i < other.num_genres; ++i) {
         genre[i] = other.genre[i];
     }
 
     directors = new std::string[other.num_directors];
-    for (int i = 0; i < other.num_directors; ++i) {
+    for (size_t i = 0; i < other.num_directors; ++i) {
         directors[i] = other.directors[i];
     }
 
     actors = new std::string[other.num_actors];
-    for (int i = 0; i <other.num_actors; ++i) {
+    for (size_t i = 0; i <other.num_actors; ++i) {
         actors[i] = other.actors[i];
     }
 }
@@ -59,7 +59,7 @@ Movie::Movie(const Movie& other) : title(other.title), year(other.year), date_pu
 Movie & Movie::operator=(const Movie& other) 
 {
     std::string* tempGenre = new std::string[other.num_genres];
-    for (int i = 0; i < other.num_genres; ++i) {
+    for (size_t i = 0; i < other.num_genres; ++i) {
         tempGenre[i] = other.genre[i];
     }
     delete[] this->genre;
@@ -68,7 +68,7 @@ Movie & Movie::operator=(const Movie& other)
 
 
     std::string* tempActors = new std::string[other.num_actors];
-    for (int i = 0; i < other.num_actors; ++i) {
+    for (size_t i = 0; i < other.num_actors; ++i) {
         tempActors[i] = other.actors[i];
     }
     delete[] this->actors;
@@ -77,7 +77,7 @@ Movie & Movie::operator=(const Movie& other)
 
 
     std::string* tempDirectors = new std::string[other.num_directors];
-    for (int i = 0; i < other.num_directors; ++i) {
+    for (size_t i = 0; i < other.num_directors; ++i) {
         tempDirectors[i] = other.directors[i];
     }
     delete[] this->directors;

@@ -157,9 +157,11 @@ int main(int argc, char** argv)
 		
 		if (operations.at(i) == "insert")
 		{
+			// assigns string to next input of operations, which is title of movie, and checks if inventory has a movie object with that name
 			std::string tempMovieStr = operations.at(i+1);
 			const Movie* tempMoviePtr = inventory->contains(tempMovieStr);
-			// can only insert into user listif movie title is in inventory, tempMoviePtr is null if not in inventory
+
+			// can only insert into user list if movie title is in inventory, tempMoviePtr is null if not in inventory
 			if (tempMoviePtr)
 			{
 				user_list.insert(*tempMoviePtr);
@@ -171,9 +173,11 @@ int main(int argc, char** argv)
 		
 		if (operations.at(i) == "remove")
 		{
+			// assigns string to next inout, and finds the movie object that contains this title
 			std::string tempMovieStr = operations.at(i+1);
 			const Movie* tempMoviePtr = inventory->contains(tempMovieStr);
 			
+			// if not a nullptr, so exists in inventory, and removes it from user_lists
 			if (tempMoviePtr)  {
 				user_list.remove(*tempMoviePtr);
 			}
@@ -185,15 +189,20 @@ int main(int argc, char** argv)
 		
 		if (operations.at(i) == "swap") 
 		{
+			// find "|", this seperates the two movies in test cases
 			std::string tempMovieStr = operations.at(i+1);
 			int indexOfPipe = tempMovieStr.find("|");
 
+			// assign each movie title to different strings
 			std::string movie1Title = tempMovieStr.substr(0, indexOfPipe);
 			std::string movie2Title = tempMovieStr.substr(indexOfPipe + 1);
 
+
+			// assigns movie pointer depending on title string, nullptr is inventory doesn't contain the movie
 			const Movie* tempMovie1Ptr = inventory->contains(movie1Title);
 			const Movie* tempMovie2Ptr = inventory->contains(movie2Title);
 
+			// makes sure both movies are in inventory, neither is nullptr, and swaps movie objects
 			if (tempMovie1Ptr && tempMovie2Ptr) {
 				user_list.swap(*tempMovie1Ptr, *tempMovie2Ptr);
 			}
@@ -214,6 +223,8 @@ int main(int argc, char** argv)
 	cerr << user_list << "\n" << "Completed all operations in " << diff_timer << " seconds." << endl;
 
 	std::ofstream ofs;
+
+	// write to different respective output files, can test diff against one another
 	if (linked_list)
 	{
 		ofs.open("outputTestFile.txt");
@@ -222,8 +233,10 @@ int main(int argc, char** argv)
 		ofs.open("outputTestFileBST.txt");
 	}
 
+	// stream user_list in and close file
 	ofs << user_list << endl;
 	ofs.close();
+
 	cerr << "At the end of main!" << endl;
 
 
