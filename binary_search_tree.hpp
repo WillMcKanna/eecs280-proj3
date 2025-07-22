@@ -17,7 +17,7 @@ class BinarySearchTree : public Inventory
             TreeNode(Movie data = Movie()) : datum(data), left(nullptr), right(nullptr) {} ;            // create default node, and node with movie passed in
         };
 
-        static TreeNode* root;
+        TreeNode* root;
         int numOfNodes;
 
 
