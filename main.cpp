@@ -222,7 +222,7 @@ int main(int argc, char** argv)
 		ofs.open("outputTestFileBST.txt");
 	}
 
-	ofs << user_list << "\n" << "Completed all operations in " << diff_timer << " seconds." << endl;
+	ofs << user_list << endl;
 	ofs.close();
 	cerr << "At the end of main!" << endl;
 
