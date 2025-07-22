@@ -21,7 +21,7 @@ class BinarySearchTree : public Inventory
         int numOfNodes;
 
 
-        /* Helper Functions */
+        /* Helper Function */
         TreeNode* insertHelper(TreeNode* node, const Movie& data);
 
 
@@ -58,7 +58,7 @@ class BinarySearchTree : public Inventory
         // prints Movie info from tree nodes
         void print(std::ostream&) const override;
 
-        //
+        // recursive call to print in order tree
         std::ostream& printTree(std::ostream& os, TreeNode* node) const;
 
         // returns the size of the binary search tree
@@ -83,23 +83,17 @@ class BinarySearchTree : public Inventory
                     return;
                 }
 
-                populateTree(node->left);
+                populateTree(node->left);                 // recursively call in order, to get minimum value, each time
                 movies.push_back(node);
                 populateTree(node->right);
             } 
       
-          // EFFECTS:  Returns the current element by reference.
-          // WARNING:  Dereferencing an iterator returns an element from the tree
-          //           by reference, which could be modified. It is the
-          //           responsibility of the user to ensure that any
-          //           modifications result in a new value that compares equal
-          //           to the existing value. Otherwise, the sorting invariant
-          //           will no longer hold.
+          // dereference pointer, to get movie object
           Movie& operator*() const {
             return movies[index]->datum;
           }
 
-          // Prefix ++
+          // Prefix ++, move index up
           Iterator &operator++() {
             index++;
             return *this;
@@ -112,10 +106,12 @@ class BinarySearchTree : public Inventory
             return temp;
           }
       
+          // check if indexes are the same
           bool operator==(const Iterator &rhs) const {
             return (this->index == rhs.index);
           }
       
+          // check if indexes are not the same
           bool operator!=(const Iterator &rhs) const {
             return !(this->index == rhs.index);
           }
@@ -127,6 +123,7 @@ class BinarySearchTree : public Inventory
           int index;
         };
 
+        // returns an iterator to beginning
         Iterator begin() const {
             return Iterator(root);
         }

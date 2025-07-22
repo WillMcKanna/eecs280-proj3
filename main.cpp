@@ -86,6 +86,7 @@ int main(int argc, char** argv)
 	Inventory* inventory;		// if not using templates
 
 
+	// create objects for both single linked list and binary search tree
 	SinglyLinkedList singleLinkedList;
 	BinarySearchTree binarySearchTree;
 
@@ -115,7 +116,7 @@ int main(int argc, char** argv)
 	
 	
 	
-	// always popoulate into singly lineid list, if bst, just go backwards
+	// if linked list, assign dynamic type to linked list object, otherwise set inventory dynamic object type to binary search tree
 	if (linked_list)
 	{
 		inventory = &singleLinkedList;
@@ -125,14 +126,14 @@ int main(int argc, char** argv)
 		inventory = &binarySearchTree;		
 	}
 
-
+	// iterate through database and insert each movie into inventory
 	for (size_t i = 0; i < finicky_database.size(); i++)
 	{
 		Movie tempMovie;
 		
 		finicky_database.read(tempMovie, i);
 	
-		inventory->insert(tempMovie);
+		inventory->insert(tempMovie);												// insert is virtual function, so will call dynamic type insert function
 		
 	}
 	

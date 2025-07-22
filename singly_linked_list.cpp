@@ -63,7 +63,7 @@ const Movie* SinglyLinkedList::contains(const std::string& datum)
     }
 
     while (tempNode != nullptr) {
-        if (tempNode->datum.get_title() == datum) {
+        if (tempNode->datum.get_title() == datum) {                 // check if node's title is same as datum
             return &(tempNode->datum);
         }
         tempNode = tempNode->next;
@@ -102,7 +102,7 @@ size_t SinglyLinkedList::size() const {
     int count = 0;
     Node* tempNode = this->head;
 
-    while (tempNode != nullptr) {
+    while (tempNode != nullptr) {                                               // iterate through list, increment count
         ++count;
         tempNode = tempNode->next;
     }
@@ -114,12 +114,12 @@ size_t SinglyLinkedList::size() const {
 void SinglyLinkedList::print(std::ostream& output_stream) const
 {
     output_stream << "[";
-    for (Node* node = head; node != nullptr; node = node->next) {
+    for (Node* node = head; node != nullptr; node = node->next) {           // iterate until nullptr
         if (node->next != nullptr) {
             output_stream << node->datum << ", ";
         }
         else {
-            output_stream << node->datum;
+            output_stream << node->datum;                                   // if last node don't print ", "
         }
     }
     output_stream << "]";
@@ -128,7 +128,7 @@ void SinglyLinkedList::print(std::ostream& output_stream) const
 // prints the list to a stream in a convenient way
 std::ostream& operator<< (std::ostream& output_stream, const SinglyLinkedList& list)
 {
-    list.print(output_stream);
+    list.print(output_stream);                                              // wrapper function
     return output_stream;
 }
 
